@@ -5,7 +5,6 @@ fun main() {
     println(2 times "Bye");
     println(2.times("Tschüss"));
 
-
     val sophia = Person("Sophia");
     val claudia = Person("Claudia");
 
