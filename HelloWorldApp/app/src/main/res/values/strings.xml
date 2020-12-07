@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">HelloWorldApp</string>
     <string name="body_message">The body of a message</string>
+    <string name="label_text">Enter your name</string>
 </resources>
