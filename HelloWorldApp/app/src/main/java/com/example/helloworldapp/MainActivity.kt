@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textView);
         val editText = findViewById<EditText>(R.id.editText);
 
+        // With Kotlin we do not need to get a reference as before
+        // but can simply use the ID of the component, i.e: button.setOnClickListener
         btnClickMe.setOnClickListener {
             totalTimes += 1;
             //Toast.makeText(this, "You clicked me.", Toast.LENGTH_SHORT).show();
