@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 import org.w3c.dom.Text
 import java.time.LocalDateTime
 
@@ -27,8 +28,18 @@ class MainActivity : AppCompatActivity() {
         btnClickMe.setOnClickListener {
             totalTimes += 1;
             //Toast.makeText(this, "You clicked me.", Toast.LENGTH_SHORT).show();
-            textView.text = """Hello ${editText.text} you have clicked $totalTimes times""";
+            this.showMessage(textView, editText, totalTimes)
         }
+
+        buttonReset.setOnClickListener {
+            totalTimes = 0
+            editText.setText("")
+            this.showMessage(textView, editText, totalTimes)
+        }
+    }
+
+    fun showMessage(textView: TextView, editText: EditText, totalTimes: Int) {
+        textView.text = "Hello ${editText.text} you have clicked $totalTimes times";
     }
 
 }
