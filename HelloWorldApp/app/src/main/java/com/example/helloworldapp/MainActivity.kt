@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showMessage(textView: TextView, editText: EditText, totalTimes: Int) {
+    private fun showMessage(textView: TextView, editText: EditText, totalTimes: Int) {
         textView.text = "Hello ${editText.text} you have clicked $totalTimes times";
     }
 
