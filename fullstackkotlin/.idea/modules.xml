@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/fullstackkotlin.iml" filepath="$PROJECT_DIR$/.idea/fullstackkotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlinbackend/kotlinbackend.iml" filepath="$PROJECT_DIR$/kotlinbackend/kotlinbackend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlinfrontend/kotlinfrontend.iml" filepath="$PROJECT_DIR$/kotlinfrontend/kotlinfrontend.iml" />
     </modules>
   </component>
 </project>
