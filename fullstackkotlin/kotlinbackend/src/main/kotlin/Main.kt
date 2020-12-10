@@ -22,9 +22,8 @@ fun main(args: Array<String>) {
                 if (count < 1) {
                     count = 1
                 }
-                var obj = Array<Entry>(count, {i -> Entry("$i: Hello, World!")})
-                val gson = Gson()
-                var str = gson.toJson(obj)
+                var obj = Array(count) { i -> Entry("$i: Hello, World!") }
+                var str = Gson().toJson(obj)
                 call.response.header("Access-Control-Allow-Origin", "*")
                 call.respondText(str, ContentType.Application.Json)
             }
