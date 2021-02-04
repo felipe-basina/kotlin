@@ -1,6 +1,16 @@
 package com.virtualpairprogrammers.learningkotlin.kotlin
 
+import kotlin.math.roundToInt
+
 fun main() {
+    val myDouble = 21.4
+    println("Is myDouble a Double? ${myDouble is Double}")
+    println("myDouble is a ${myDouble::class.qualifiedName}")
+    println("myDouble's javaClass is ${myDouble.javaClass}")
+
+    val myInteger = myDouble.roundToInt()
+    println("myInteger is a ${myInteger::class.qualifiedName}")
+
 //    var name: String = "Test"
 //    val surname: String = "Another" // Immutable variable
 //    name = "Changed..."
