@@ -51,17 +51,41 @@ class AlternativeClass(name: String, age: Int) {
     }
 }
 
-class AnotherAlternativeClass(val name: String, var age: Int, val address: String = "")
+class AnotherAlternativeCustomer(val name: String, var age: Int, val address: String = "") {
+    var approved: Boolean = false
+    set(value) {
+        if (age >= 21) {
+            field = value
+        } else {
+            println("You can't approve a customer under 21 years old")
+        }
+    }
+//    get() {
+//        return field
+//    }
+
+    /**
+     * Methods set/get should be declared after the member attribute
+     */
+    val nextAge: Int
+    get() {
+        return age + 1
+    }
+}
 
 /**
  * It is not needed to call new to create instace of a class
  * It is not usual to call get/set when accessing classes attributes
  */
 fun main() {
-    val customer = Customer("The Name", "Any address w/o number", 18)
-    customer.age = 22
+    val customer = AnotherAlternativeCustomer("The Name", 18, "Any address w/o number")
+    //customer.age = 22
+    customer.approved = true
     println("${customer.name} is ${customer.age} years old")
+    println("${customer.name} is ${customer.approved}")
 
-    val secondCustomer = Customer("The second one", 19)
+    val secondCustomer = AnotherAlternativeCustomer("The second one", 19)
     println("${secondCustomer.name} is ${secondCustomer.age} years old, address ${secondCustomer.address}")
+    println("${secondCustomer.name} is ${secondCustomer.approved}")
+    println("${secondCustomer.name} next age ${secondCustomer.nextAge}")
 }
