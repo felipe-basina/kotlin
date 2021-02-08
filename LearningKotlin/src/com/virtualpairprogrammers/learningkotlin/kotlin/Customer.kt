@@ -39,6 +39,20 @@ class Customer(val name: String,
     }
 }
 
+class AlternativeClass(name: String, age: Int) {
+    var address: String
+
+    init {
+        this.address = ""
+    }
+
+    constructor(name: String, address: String, age: Int): this(name, age) {
+        this.address = address
+    }
+}
+
+class AnotherAlternativeClass(val name: String, var age: Int, val address: String = "")
+
 /**
  * It is not needed to call new to create instace of a class
  * It is not usual to call get/set when accessing classes attributes
