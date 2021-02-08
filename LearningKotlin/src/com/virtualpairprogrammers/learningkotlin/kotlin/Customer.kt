@@ -83,6 +83,11 @@ class AnotherAlternativeCustomer(val name: String, var age: Int, val address: St
     override fun toString() =
         "$name $address $age"
 
+    // Creates a static method
+    companion object {
+        fun getInstance() = AnotherAlternativeCustomer("Micky", 22, "Some address")
+    }
+
 }
 
 /**
@@ -101,4 +106,5 @@ fun main() {
     println("${secondCustomer.name} is ${secondCustomer.approved}")
     println("${secondCustomer.upperCaseName()} next age ${secondCustomer.nextAge}")
     println("$secondCustomer")
+    println(AnotherAlternativeCustomer.getInstance())
 }
