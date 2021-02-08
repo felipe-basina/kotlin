@@ -9,8 +9,11 @@ class Customer2(val name: String,
 
 /**
  * Specifying the class with its member parameters (constructor)
+ *
+ * The data modify provides methods like toString, hashCode, get/set, copy... and it will
+ * possible to use destructuring (component functions)
  */
-class Customer(val name: String,
+data class Customer(val name: String,
                val address: String,
                var age: Int) {
 
@@ -107,4 +110,14 @@ fun main() {
     println("${secondCustomer.upperCaseName()} next age ${secondCustomer.nextAge}")
     println("$secondCustomer")
     println(AnotherAlternativeCustomer.getInstance())
+
+    // Creating instances from a data class
+    val customer4 = Customer("Sally", 29)
+    println(customer4)
+    val customer5 = customer4.copy(name="Diane")
+    println(customer5)
+
+    // Using destructuring
+    val (name, address, age) = customer5
+    println("$name $address $age")
 }
