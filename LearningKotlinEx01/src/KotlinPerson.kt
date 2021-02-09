@@ -13,9 +13,9 @@ data class KotlinPerson(
 
     companion object {
 
-        fun getAge(dateOfBirth: Calendar?): Int {
+        fun getAge(dateOfBirth: Calendar?): Int? {
             if (dateOfBirth === null) {
-                return -1
+                return null
             }
 
             val today: Calendar = GregorianCalendar()
@@ -29,7 +29,12 @@ data class KotlinPerson(
 
     }
 
-    val age: Int
+    val age: Int?
         get() = getAge(this.dateOfBirth)
+
+    // If age is not null then return age otherwise -1
+    // This similar to if (age != null) age else -1
+    val safeAge: Int
+        get() = age ?: -1
 
 }
