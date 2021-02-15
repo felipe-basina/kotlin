@@ -75,7 +75,6 @@ class Theater {
 }
 
 fun main() {
-    val theater = Theater()
-    val cheapSeats = theater.seats.filter { it.price == BigDecimal(14.50) }
+    val cheapSeats = Theater().seats.filter { it.price == BigDecimal(14.50) }
     for (seat in cheapSeats) println(seat)
 }
