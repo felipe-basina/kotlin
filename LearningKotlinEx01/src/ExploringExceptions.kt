@@ -7,4 +7,6 @@ fun main() {
     } catch (ae: ArithmeticException) {
         println("caught")
     }
+
+    Thread.sleep(100)
 }
