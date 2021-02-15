@@ -39,6 +39,17 @@ class AdvancedBookingManager : BasicBookingManager("12345") {
 
 }
 
+/**
+ * This is an example of adding functions into an existing class, even if it is final
+ * So in this file or package the class String has a new method called toSentenceCase()
+ */
+fun String.toSentenceCase(): String {
+    return this[0].toUpperCase() + this.substring(1)
+}
+
 fun main() {
     println(AdvancedBookingManager().isSeatFree(Seat(1, 1, BigDecimal.ZERO, "")))
+
+    var greeting = "welcome to the system"
+    println(greeting.toSentenceCase())
 }
