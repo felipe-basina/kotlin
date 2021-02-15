@@ -2,7 +2,7 @@ import java.io.FileInputStream
 import java.lang.ArithmeticException
 import kotlin.jvm.Throws
 
-// This annotation is just a hint to show the method my throw the specific exception
+// This annotation is just a hint to show the method may throw the specific exception
 // But when this method being called by Java code the compiler will complain forcing the Java code to
 // catch or throw it again
 @Throws(InterruptedException::class)
