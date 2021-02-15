@@ -20,4 +20,10 @@ fun main() {
     val webColors = mapOf("red" to "ff0000", "blue" to "00ff00")
     println(webColors)
     println(webColors["blue"])
+
+    //val intArray: Array<Int> = arrayOf(1,2,3,4,5) same as below
+    val intArray: IntArray = intArrayOf(1,2,3,4,5)
+    intArray[3] = -4
+    intArray.forEach { println(it) } // reserved key word, could be replaced by intVal -> println(val)
+    intArray.forEach { intVal -> println(intVal) }
 }
