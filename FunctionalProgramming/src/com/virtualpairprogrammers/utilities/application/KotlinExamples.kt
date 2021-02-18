@@ -19,4 +19,9 @@ fun main() {
 
     val upperCaseColors = colors.map { it.toUpperCase() }
     upperCaseColors.forEach { println(it) }
+
+    val colorsStartingWithB = colors.filter { it.startsWith("b") }
+    colorsStartingWithB.forEach { println(it) }
+
+    colors.flatMap { if (it.startsWith("b")) listOf(it, it) else listOf(it) }.forEach { println(it) }
 }
