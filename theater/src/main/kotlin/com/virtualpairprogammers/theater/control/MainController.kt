@@ -2,6 +2,7 @@ package com.virtualpairprogammers.theater.control
 
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.servlet.ModelAndView
 
 @Controller
@@ -12,6 +13,11 @@ class MainController {
 
     @RequestMapping(path = [ "" ])
     fun homePage() : ModelAndView {
+        return ModelAndView("seatBooking", "bean", CheckAvailabilityBackingBean())
+    }
+
+    @RequestMapping(path = [ "/checkAvailability" ], method = [ RequestMethod.POST ])
+    fun checkAvailability(bean: CheckAvailabilityBackingBean) : ModelAndView {
         return ModelAndView("seatBooking", "bean", CheckAvailabilityBackingBean())
     }
 

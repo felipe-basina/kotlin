@@ -1,11 +1,11 @@
+package com.virtualpairprogammers.theater.service
+
+import com.virtualpairprogammers.theater.domain.Seat
+import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
-
-data class Seat(val row: Int, val num: Int, val price: BigDecimal, val description: String) {
-    override fun toString(): String = "Seat $row-$num $$price ($description)"
-}
-
-class Theater {
+@Service
+class TheaterService {
 
     private val hiddenSeats = mutableListOf<Seat>()
 
@@ -33,12 +33,17 @@ class Theater {
 
         for (row in 1..15) {
             for (num in 1..36) {
-                hiddenSeats.add(Seat(row, num, getPrice(row,num), getDescription(row,num) ))
+                // (row + 64).toChar() = A....
+                hiddenSeats.add(Seat((row + 64).toChar(), num, getPrice(row,num), getDescription(row,num) ))
             }
         }
     }
 
 	val seats
     get() = hiddenSeats.toList()
+
+    fun find(num: Int, row: Char) : Seat {
+        return seats.first { it.row == row && it.num == num }
+    }
 
 }
