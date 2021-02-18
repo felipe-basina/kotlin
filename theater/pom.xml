@@ -50,6 +50,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -67,6 +75,7 @@
 					<args>
 						<arg>-Xjsr305=strict</arg>
 					</args>
+					<jvmTarget>1.8</jvmTarget>
 					<compilerPlugins>
 						<plugin>spring</plugin>
 					</compilerPlugins>
