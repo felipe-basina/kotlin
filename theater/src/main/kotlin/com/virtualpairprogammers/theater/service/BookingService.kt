@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service
 @Service
 class BookingService {
 
-    fun isSeatFree(seat: Seat) : Boolean {
-        return true
-    }
+    fun isSeatFree(seat: Seat) : Boolean = true
 
 }
