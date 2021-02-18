@@ -14,4 +14,9 @@ fun main() {
     println(result)
     println(result1)
     println(result2)
+
+    val colors = listOf("red", "green", "blue", "black")
+
+    val upperCaseColors = colors.map { it.toUpperCase() }
+    upperCaseColors.forEach { println(it) }
 }
