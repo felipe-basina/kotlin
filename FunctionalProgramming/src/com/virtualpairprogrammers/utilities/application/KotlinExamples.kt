@@ -36,4 +36,9 @@ fun main() {
     println(numbers.count())
     println(numbers.fold(0) { result, value -> result + value }) // With fold we can set an initial value
     println(numbers.fold(0) { result, value -> if (value > result) value else result })
+
+    val myMap = mapOf(1 to "one", 2 to "two", 3 to "three")
+    myMap.filterValues { it.startsWith("t") }.forEach { (k, v) -> println("$k $v")  }
+    // When using the syntax (k, v) it means destructuring
+    myMap.filter { it.value.startsWith("t") }.forEach { (k, v) -> println("$k $v")  }
 }
