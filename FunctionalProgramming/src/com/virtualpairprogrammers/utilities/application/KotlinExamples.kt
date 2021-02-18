@@ -24,4 +24,16 @@ fun main() {
     colorsStartingWithB.forEach { println(it) }
 
     colors.flatMap { if (it.startsWith("b")) listOf(it, it) else listOf(it) }.forEach { println(it) }
+
+    println(colors.reduce { result, value -> "$result, $value" })
+
+    val numbers = colors.map { it.length }
+    println(numbers)
+
+    println(numbers.reduce { acc, i -> acc + i })
+    println(numbers.sum())
+    println(numbers.average())
+    println(numbers.count())
+    println(numbers.fold(0) { result, value -> result + value }) // With fold we can set an initial value
+    println(numbers.fold(0) { result, value -> if (value > result) value else result })
 }
