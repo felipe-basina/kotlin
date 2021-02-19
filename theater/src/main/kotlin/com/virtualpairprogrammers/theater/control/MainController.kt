@@ -73,16 +73,7 @@ class MainController {
         redirAttrs.addFlashAttribute("message",
             "Booked ${booking.seat}|${booking.performance.title} for ${bean.customerName}")
 
-        return "redirect:/reset"
-    }
-
-    @RequestMapping(path = [ "/reset" ], method = [ RequestMethod.GET ])
-    fun reset() : ModelAndView {
-        val model = mapOf("bean" to CheckAvailabilityBackingBean(),
-            "performances" to this.performanceRepository.findAll(),
-            "seatNums" to 1..36,
-            "seatRows" to 'A'..'O')
-        return ModelAndView("seatBooking", model)
+        return "redirect:/"
     }
 
     @RequestMapping(path = [ "/bootstrap" ])
