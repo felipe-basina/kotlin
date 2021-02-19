@@ -17,13 +17,13 @@ class BookingService {
         if (performance == null) {
             return false
         }
-        val booked = this.findBookedSeat(seat)
-        return booked == null || booked.performance != performance
+        val booked = this.findBookedSeat(seat, performance)
+        return booked == null || booked.performance.id != performance.id
     }
 
-    fun findBookedSeat(seat: Seat) : Booking? {
+    fun findBookedSeat(seat: Seat, performance: Performance?) : Booking? {
         val bookings: List<Booking> = this.bookingRepository.findAll()
-        return bookings.filter { it.seat == seat }.getOrNull(0)
+        return bookings.filter { it.seat == seat && it.performance.id == performance!!.id }.getOrNull(0)
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.servlet.ModelAndView
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
 class MainController {
@@ -52,7 +53,7 @@ class MainController {
 
         bean.available = bookingService.isSeatFree(selectedSeat, bean.performance)
         if (bean.available == false) {
-            bean.booking = this.bookingService.findBookedSeat(selectedSeat)
+            bean.booking = this.bookingService.findBookedSeat(selectedSeat, bean.performance)
         }
 
         val model = mapOf("bean" to bean,
@@ -63,12 +64,25 @@ class MainController {
     }
 
     @RequestMapping(path = [ "/booking" ], method = [ RequestMethod.POST ])
-    fun booking(bean: CheckAvailabilityBackingBean) : String {
+    fun booking(bean: CheckAvailabilityBackingBean, redirAttrs: RedirectAttributes) : String {
         val booking = Booking(0, bean.customerName)
         booking.seat = bean.seat!!
         booking.performance = bean.performance!!
         this.bookingService.bookingRepository.save(booking)
-        return "redirect:/"
+
+        redirAttrs.addFlashAttribute("message",
+            "Booked ${booking.seat}|${booking.performance.title} for ${bean.customerName}")
+
+        return "redirect:/reset"
+    }
+
+    @RequestMapping(path = [ "/reset" ], method = [ RequestMethod.GET ])
+    fun reset() : ModelAndView {
+        val model = mapOf("bean" to CheckAvailabilityBackingBean(),
+            "performances" to this.performanceRepository.findAll(),
+            "seatNums" to 1..36,
+            "seatRows" to 'A'..'O')
+        return ModelAndView("seatBooking", model)
     }
 
     @RequestMapping(path = [ "/bootstrap" ])

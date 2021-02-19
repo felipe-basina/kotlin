@@ -8,6 +8,8 @@
     <h1>Theater Booking</h1>
     <h2>Seat availability</h2>
 
+    <h4 th:text="${message}" style="color: blue"></h4>
+
     <form action="/checkAvailability" th:object="${bean}" method="POST">
         <p>Check if seat number
             <select th:field="*{selectedSeatNum}">
@@ -37,7 +39,7 @@
         </form>
     </div>
 
-    <p th:if="${bean.available == false}">
+    <p th:if="${bean.available == false}" style="color: red">
         I'm sorry - this seat is already booked for this performance. The customer is <span th:text="${bean.booking.customerName}"}></span></a>
     </p>
 
