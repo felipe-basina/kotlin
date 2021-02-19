@@ -65,7 +65,7 @@ class MainController {
 
     @RequestMapping(path = [ "/booking" ], method = [ RequestMethod.POST ])
     fun booking(bean: CheckAvailabilityBackingBean, redirAttrs: RedirectAttributes) : ModelAndView {
-        val booking = this.bookingService.reservereSeat(bean.seat!!, bean.performance!!, bean.customerName)
+        val booking = this.bookingService.reserveSeat(bean.seat!!, bean.performance!!, bean.customerName)
 
 //        redirAttrs.addFlashAttribute("message",
 //            "Booked ${booking.seat}|${booking.performance.title} for ${bean.customerName}")
