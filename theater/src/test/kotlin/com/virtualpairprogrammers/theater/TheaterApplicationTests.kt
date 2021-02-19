@@ -1,4 +1,4 @@
-package com.virtualpairprogammers.theater
+package com.virtualpairprogrammers.theater
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

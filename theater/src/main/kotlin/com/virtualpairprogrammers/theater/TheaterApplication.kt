@@ -1,4 +1,4 @@
-package com.virtualpairprogammers.theater
+package com.virtualpairprogrammers.theater
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

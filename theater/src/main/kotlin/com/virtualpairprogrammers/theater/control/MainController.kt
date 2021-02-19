@@ -1,8 +1,8 @@
-package com.virtualpairprogammers.theater.control
+package com.virtualpairprogrammers.theater.control
 
-import com.virtualpairprogammers.theater.data.SeatRepository
-import com.virtualpairprogammers.theater.service.BookingService
-import com.virtualpairprogammers.theater.service.TheaterService
+import com.virtualpairprogrammers.theater.data.SeatRepository
+import com.virtualpairprogrammers.theater.service.BookingService
+import com.virtualpairprogrammers.theater.service.TheaterService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
