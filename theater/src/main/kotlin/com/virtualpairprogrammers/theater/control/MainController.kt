@@ -64,16 +64,13 @@ class MainController {
     }
 
     @RequestMapping(path = [ "/booking" ], method = [ RequestMethod.POST ])
-    fun booking(bean: CheckAvailabilityBackingBean, redirAttrs: RedirectAttributes) : String {
-        val booking = Booking(0, bean.customerName)
-        booking.seat = bean.seat!!
-        booking.performance = bean.performance!!
-        this.bookingService.bookingRepository.save(booking)
+    fun booking(bean: CheckAvailabilityBackingBean, redirAttrs: RedirectAttributes) : ModelAndView {
+        val booking = this.bookingService.reservereSeat(bean.seat!!, bean.performance!!, bean.customerName)
 
-        redirAttrs.addFlashAttribute("message",
-            "Booked ${booking.seat}|${booking.performance.title} for ${bean.customerName}")
-
-        return "redirect:/"
+//        redirAttrs.addFlashAttribute("message",
+//            "Booked ${booking.seat}|${booking.performance.title} for ${bean.customerName}")
+//        return "redirect:/"
+        return ModelAndView("bookingConfirmed", "booking",  booking)
     }
 
     @RequestMapping(path = [ "/bootstrap" ])

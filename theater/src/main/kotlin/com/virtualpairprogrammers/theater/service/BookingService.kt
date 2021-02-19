@@ -26,4 +26,11 @@ class BookingService {
         return bookings.filter { it.seat == seat && it.performance.id == performance!!.id }.getOrNull(0)
     }
 
+    fun reservereSeat(seat: Seat, performance: Performance, customerName: String) : Booking {
+        val booking = Booking(0, customerName)
+        booking.seat = seat
+        booking.performance = performance
+        return this.bookingRepository.save(booking)
+    }
+
 }
