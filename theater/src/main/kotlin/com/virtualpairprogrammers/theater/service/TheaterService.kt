@@ -1,11 +1,16 @@
 package com.virtualpairprogrammers.theater.service
 
+import com.virtualpairprogrammers.theater.data.SeatRepository
 import com.virtualpairprogrammers.theater.domain.Seat
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
 @Service
 class TheaterService {
+
+    @Autowired
+    lateinit var seatRepository: SeatRepository
 
     private val hiddenSeats = mutableListOf<Seat>()
 
@@ -43,7 +48,8 @@ class TheaterService {
     get() = hiddenSeats.toList()
 
     fun find(num: Int, row: Char) : Seat {
-        return seats.first { it.row == row && it.num == num }
+        //return seats.first { it.row == row && it.num == num }
+        return this.seatRepository.findAll().first { it.row == row && it.num == num }
     }
 
 }
