@@ -1,5 +1,6 @@
 package com.api.examples.service
 
+import com.api.examples.component.convertToFake
 import com.api.examples.repository.FakeRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -17,7 +18,7 @@ class FakeService {
     fun save(file: MultipartFile) {
         for (line in BufferedReader(InputStreamReader(file.inputStream, StandardCharsets.UTF_8))
             .lines()) {
-            println(line)
+            println(convertToFake(line))
         }
     }
 

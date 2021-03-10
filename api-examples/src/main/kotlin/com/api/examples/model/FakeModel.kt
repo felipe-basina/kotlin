@@ -6,9 +6,9 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "fakeone")
-data class FakeModel(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long,
-                        val description: String,
-                        val code: String,
-                        val creationDate: LocalDateTime,
-                        val businessDate: LocalDate,
-                        val active: Boolean)
+data class FakeModel(@Id @GeneratedValue(strategy = GenerationType.AUTO) val id: Long?,
+                     val description: String,
+                     val code: String,
+                     val creationDate: LocalDateTime,
+                     val businessDate: LocalDate,
+                     val active: Boolean)
