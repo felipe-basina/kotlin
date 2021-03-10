@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS fakeone (
     business_date DATE,
     active boolean,
     primary key (id)
-    );
+);
 
 SET character_set_client = utf8;
 SET character_set_connection = utf8;
