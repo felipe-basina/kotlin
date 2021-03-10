@@ -1,6 +1,6 @@
 package com.api.examples.service
 
-import com.api.examples.FakeDao
+import com.api.examples.dao.FakeDao
 import com.api.examples.component.LogExecutionTime
 import com.api.examples.component.convertToFake
 import com.api.examples.model.FakeModel
@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
+import java.util.concurrent.atomic.AtomicInteger
 
 @Service
 class FakeService {
@@ -26,6 +27,7 @@ class FakeService {
         var modelList: MutableList<FakeModel> = ArrayList()
         var count: Int = 0
 
+        // TODO: CREATE LIST IN A MORE EFFICIENT WAY
         for (line in BufferedReader(InputStreamReader(file.inputStream, StandardCharsets.UTF_8))
             .lines()) {
             if (count++ < 200) {
@@ -42,24 +44,35 @@ class FakeService {
             modelsList.add(modelList)
         }
 
-        this.fakeRepository.deleteAll()
         println(":: Running thread ${Thread.currentThread().name}, total: ${modelsList.size}")
         this.saveInParallel(modelsList)
         this.fakeRepository.deleteAll()
         this.saveInSingleThread(modelsList)
+        this.fakeRepository.deleteAll()
     }
 
+    // TODO: CHECK ASPECT IS NOT WORKING
     @LogExecutionTime
     fun saveInParallel(modelsList: MutableList<MutableList<FakeModel>>) {
+        var atomicInteger = AtomicInteger(1)
         modelsList.parallelStream().forEach {
-            this.fakeDao.saveAsBatch(it)
+            try {
+                this.fakeDao.saveAsBatch(it, atomicInteger.incrementAndGet())
+            } catch(ex: Exception) {
+                println(ex.message)
+            }
         }
     }
 
     @LogExecutionTime
     fun saveInSingleThread(modelsList: MutableList<MutableList<FakeModel>>) {
+        var atomicInteger = AtomicInteger(1)
         modelsList.forEach {
-            this.fakeDao.saveAsBatch(it)
+            try {
+                this.fakeDao.saveAsBatch(it, atomicInteger.incrementAndGet())
+            } catch(ex: Exception) {
+                println(ex.message)
+            }
         }
     }
 
