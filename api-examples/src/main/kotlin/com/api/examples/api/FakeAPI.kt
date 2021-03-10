@@ -29,6 +29,11 @@ class FakeAPI {
         return this.fakeRepository.findByIdOrNull(id)
     }
 
+    @RequestMapping(path = [ "/" ], method = [ RequestMethod.DELETE ])
+    fun deleteAll() {
+        this.fakeRepository.deleteAll()
+    }
+
     @RequestMapping(path = [ "/upload" ], method = [ RequestMethod.POST ])
     fun fileUpload(@RequestParam(value = "file") file: MultipartFile) {
         this.fakeService.save(file)
