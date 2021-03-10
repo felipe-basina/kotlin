@@ -17,6 +17,7 @@ class FakeDao {
 
     @Transactional(propagation = Propagation.REQUIRED)
     fun saveAsBatch(fakeList: MutableList<FakeModel>) {
+        println("Running thread ${Thread.currentThread().name}, total: ${fakeList.size}")
         this.jdbcTemplate
             .batchUpdate("INSERT INTO fakeone (description, code, creation_date, business_date, active) values (?, ?, ?, ?, ?)",
                 fakeList, fakeList.size) { ps, (_, description, code, creationDate, businessDate, active) ->

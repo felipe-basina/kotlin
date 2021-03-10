@@ -1,6 +1,7 @@
 package com.api.examples.service
 
 import com.api.examples.FakeDao
+import com.api.examples.component.LogExecutionTime
 import com.api.examples.component.convertToFake
 import com.api.examples.model.FakeModel
 import com.api.examples.repository.FakeRepository
@@ -16,6 +17,9 @@ class FakeService {
 
     @Autowired
     lateinit var fakeDao: FakeDao
+
+    @Autowired
+    lateinit var fakeRepository: FakeRepository
 
     fun save(file: MultipartFile) {
         val modelsList: MutableList<MutableList<FakeModel>> = ArrayList()
@@ -38,6 +42,22 @@ class FakeService {
             modelsList.add(modelList)
         }
 
+        this.fakeRepository.deleteAll()
+        println(":: Running thread ${Thread.currentThread().name}, total: ${modelsList.size}")
+        this.saveInParallel(modelsList)
+        this.fakeRepository.deleteAll()
+        this.saveInSingleThread(modelsList)
+    }
+
+    @LogExecutionTime
+    fun saveInParallel(modelsList: MutableList<MutableList<FakeModel>>) {
+        modelsList.parallelStream().forEach {
+            this.fakeDao.saveAsBatch(it)
+        }
+    }
+
+    @LogExecutionTime
+    fun saveInSingleThread(modelsList: MutableList<MutableList<FakeModel>>) {
         modelsList.forEach {
             this.fakeDao.saveAsBatch(it)
         }
