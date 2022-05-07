@@ -19,7 +19,7 @@ class CustomAspectComponent(@Autowired val authorizationComponent: Authorization
             println("Can invoke function....")
             return pjp.proceed()
         }
-        throw RuntimeException("Can not invoke function wiht param=$param")
+        throw RuntimeException("Can not invoke function with param=$param")
     }
 
 }
