@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 class FakeAService {
 
     @AuthorizedOnly
-    fun fakeA(paramObj: ParamObj) {
+    fun fakeA(authorizationComponent: AuthorizationComponent, paramObj: ParamObj) {
         println("Called fakeA function with param=${paramObj.param}")
     }
 
