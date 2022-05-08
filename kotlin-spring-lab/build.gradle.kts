@@ -30,6 +30,7 @@ dependencies {
 
 	testImplementation(kotlin("test-junit5"))
 	testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", "5.6.2")
+	testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
 
 tasks.withType<KotlinCompile> {
