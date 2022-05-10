@@ -13,27 +13,6 @@ class MultipleEntitiesService(@Autowired val em: EntityManager) {
         val abominalId = 9
         val abominalName = "Strange name"
 
-        val sb = StringBuilder(" SELECT f, a, r FROM ")
-            .append(" Fake f, Abominal a, Relation r ")
-            .append(" WHERE ")
-            .append(" f.name = :fakeName ")
-            .append(" AND a.id = :abominalId ")
-            .append(" AND a.name = :abominalName ")
-
-        val resultList = em.createQuery(sb.toString())
-            .setParameter("fakeName", fakeName)
-            .setParameter("abominalId", abominalId.toLong())
-            .setParameter("abominalName", abominalName)
-            .resultList
-
-        println(resultList)
-    }
-
-    fun getMultipleEntities2() {
-        val fakeName = "fakiee"
-        val abominalId = 9
-        val abominalName = "Strange name"
-
         val sb = StringBuilder(" SELECT DISTINCT r FROM ")
             .append(" Relation r ")
             .append(" JOIN FETCH r.fake f ")
