@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
 	try {
 		//createData(applicationContext)
 		val service = applicationContext.getBean(MultipleEntitiesService::class.java)
-		service.getMultipleEntities2()
+		service.getMultipleEntities()
 	} catch (ex: Exception) {
 		ex.printStackTrace()
 	}
