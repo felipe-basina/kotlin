@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Public API Entries</title>
+    <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+    </script>
+    <style>
+        .parent-div {
+            padding: 0px 0px 25px 0px;
+        }
+
+        .child-div {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .button-width {
+            width: 92px;
+        }
+    </style>
+</head>
+<body>
+<h1>All public api entries available</h1>
+
+<div class="parent-div">
+    <div class="child-div">
+        <button class="button-width" onclick="getContent()">Get Content</button>
+    </div>
+    <div class="child-div">
+        <button class="button-width" onclick="clearContent()">Clear</button>
+    </div>
+</div>
+
+<table id="publicEntries" style="width: 100%; display: none">
+    <thead>
+    <tr>
+        <td><strong>API</strong></td>
+        <td><strong>Description</strong></td>
+        <td><strong>Auth</strong></td>
+        <td><strong>Https</strong></td>
+        <td><strong>Cors</strong></td>
+        <td><strong>Link</strong></td>
+        <td><strong>Category</strong></td>
+    </tr>
+    </thead>
+    <tfoot>
+    </tfoot>
+</table>
+
+<script type="text/javascript">
+
+    function createDataTable(content) {
+        clearContent();
+        $('#publicEntries').DataTable({
+            aoColumns: [
+                {mData: 'api'},
+                {mData: 'description'},
+                {mData: 'auth'},
+                {mData: 'https'},
+                {mData: 'cors'},
+                {mData: 'link'},
+                {mData: 'category'}
+            ],
+            data: content
+        });
+        $('#publicEntries').show();
+    }
+
+    function getContent() {
+        console.log('Getting content');
+        $.ajax({
+            "url": "/public/entries/all/json",
+            "type": "GET",
+            "contentType": "application/json",
+            "async": false,
+            "success": function (data) {
+                console.log(`Ajax call response: ${JSON.stringify(data)}`);
+                createDataTable(data);
+            }
+        });
+
+        console.log('Content should be loaded by now!');
+    }
+
+    function clearContent() {
+        $('#publicEntries').DataTable().destroy();
+        $('#publicEntries').hide();
+    }
+
+</script>
+
+</body>
+</html>
