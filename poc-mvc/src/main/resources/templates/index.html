@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Public API Entries</title>
+    <link href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#publicEntries').DataTable({
+                columns: [
+                    {
+                        title: 'API',
+                        data: 'entry.API'
+                    },
+                    {
+                        title: 'Description',
+                        data: 'entry.Description'
+                    },
+                    {
+                        title: 'Auth',
+                        data: 'entry.Auth'
+                    },
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>All public api entries available</h1>
+
+<form action="/public/entries/all" method="get">
+    <input type="submit" value="Get Entries"/>
+</form>
+
+</body>
+</html>
