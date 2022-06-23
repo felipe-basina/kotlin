@@ -19,6 +19,12 @@ class PublicApiEntriesController(
         return ModelAndView("index", model)
     }
 
+    @RequestMapping(path = ["/index2"])
+    fun index2(): ModelAndView {
+        val model = mapOf("bean" to null)
+        return ModelAndView("index2", model)
+    }
+
     @RequestMapping(path = ["/public/entries"])
     fun publicEntries(): ModelAndView {
         val model = mapOf("bean" to null)
