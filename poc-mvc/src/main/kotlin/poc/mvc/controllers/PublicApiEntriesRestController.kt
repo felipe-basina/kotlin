@@ -13,11 +13,11 @@ class PublicApiEntriesRestController(
     @Autowired private val entriesClient: PublicApiEntriesClient
 ) {
 
-    @GetMapping(path = ["/public/entries/all"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping(path = ["/public/entries/all/json"], produces = [MediaType.APPLICATION_JSON_VALUE])
     fun first10(): List<Entries> {
         val entriesResponse = this.entriesClient.getEntries()
         val first10 = if (Objects.nonNull(entriesResponse)) {
-            entriesResponse.entries.subList(0, 11)
+            entriesResponse.entries
         } else {
             emptyList()
         }
