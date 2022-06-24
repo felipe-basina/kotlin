@@ -1,11 +1,14 @@
 package poc.mvc.controllers
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 import poc.mvc.gateways.EntriesResponse
 import poc.mvc.gateways.PublicApiEntriesClient
+import poc.mvc.repository.FakeRepo
 import java.util.*
 
 @Controller
@@ -23,6 +26,17 @@ class PublicApiEntriesController(
     fun index2(): ModelAndView {
         val model = mapOf("bean" to null)
         return ModelAndView("index2", model)
+    }
+
+    @RequestMapping(path = ["/public/entries/all/{api}"])
+    fun view(@PathVariable(value = "api") api: String): ModelAndView {
+        val entry = FakeRepo.findByApi(api)
+        val asJson = ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(entry)
+        val model = mapOf(
+            "bean" to entry,
+            "asJson" to asJson
+        )
+        return ModelAndView("viewDetails", model)
     }
 
     @RequestMapping(path = ["/public/entries"])
