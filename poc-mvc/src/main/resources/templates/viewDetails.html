@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Public API Entries</title>
+    <style>
+        .json-div {
+            border: 3px solid gray;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<h1 th:text="${bean.API}" style="color: blue"></h1>
+<p>API : <span th:text="${bean.API}">seat</span></p>
+<p>DESCRIPTION : <span th:text="${bean.Description}">performance</span></p>
+<p>AUTH : <span th:text="${bean.Auth}">customer</span></p>
+<p>HTTPS : <span th:text="${bean.HTTPS}">customer</span></p>
+<p>CORS : <span th:text="${bean.Cors}">customer</span></p>
+<p>LINK : <span th:text="${bean.Link}">customer</span></p>
+<p>CATEGORY : <span th:text="${bean.Category}">customer</span></p>
+
+<div class="json-div" th:rowspan="2">
+    <pre th:text="${asJson}"></pre>
+</div>
+
+<a style="padding: 5px 0px 0px 0px" href="/index2">back</a>
+</body>
+</html>
