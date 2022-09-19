@@ -1,12 +1,44 @@
 version: '3'
 
 services:
-  thedb:
-    image: postgres
+  #    thedb:
+  #      environment:
+  #      - POSTGRES_DB=dev_db
+  #      - POSTGRES_USER=postgres
+  #      - POSTGRES_HOST_AUTH_METHOD=trust
+  #      - TZ='America/Sao_Paulo'
+  #    image: postgres
+  #    ports:
+  #      - "5433:5432"
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    network_mode: host
     environment:
       - POSTGRES_DB=dev_db
       - POSTGRES_USER=postgres
-      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_PASSWORD=postgres
       - TZ='America/Sao_Paulo'
     ports:
-      - "5432:5432"
+      - '5432:5432'
+#    volumes:
+#      - db:/var/lib/postgresql/data
+#volumes:
+#  db:
+#    driver: local
+
+
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.17.0.1/16
+
+
+# docker-compose up --force-recreate
+
+# sudo docker run -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=dev_db -p 5432:5432 postgres:14.1-alpine
+# docker ps | docker stop <CONTAINER_ID>
+# docker ps | docker exec -it <hash> bash | psql | ALTER ROLE postgres WITH PASSWORD 'your_password';

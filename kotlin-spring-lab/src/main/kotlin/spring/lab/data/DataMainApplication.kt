@@ -11,7 +11,6 @@ import spring.lab.data.repository.AbominalRepository
 import spring.lab.data.repository.FakeRepository
 import spring.lab.data.repository.RelationRepository
 import spring.lab.data.service.MultipleEntitiesService
-import java.time.LocalDateTime
 import kotlin.system.exitProcess
 
 @SpringBootApplication
@@ -36,34 +35,22 @@ fun createData(applicationContext: ApplicationContext) {
 	val relationRepository = applicationContext.getBean(RelationRepository::class.java)
 
 	// Fake
-	var fake = Fake()
-	fake.name = "fakiee"
+	var fake = Fake("fakiee")
 	fake = fakeRepository.save(fake)
 
-	var abominal = Abominal()
-	abominal.name = "Strange name"
-	abominal.localDateTime = LocalDateTime.now()
+	var abominal = Abominal("Strange name")
 	abominal = abominalRepository.save(abominal)
 
 	// Relation
-	var relation = Relation()
-	relation.name = "The relation"
-	relation.identifier = 1001
-	relation.description = "Great things are coming"
+	var relation = Relation("The relation", 1001, "Great things are coming")
 	relation.fake = fake
 	relation.abominal = abominal
 
 	// Childs
-	val child1 = Child()
-	child1.flag = true
-	child1.name = "Child1"
-	child1.description = "First description"
+	val child1 = Child("Child1", "First description", true)
 	child1.relation = relation
 
-	val child2 = Child()
-	child2.flag = false
-	child2.name = "Child2"
-	child2.description = "Second description"
+	val child2 = Child("Child2", "Second description", false)
 	child2.relation = relation
 
 	relation.addChild(child1)

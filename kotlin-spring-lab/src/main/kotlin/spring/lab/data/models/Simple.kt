@@ -4,38 +4,39 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-data class Abominal(
+data class Simple(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = -1,
 
     @Column(nullable = false)
-    var name: String? = null,
+    var description: String? = null,
 
     @Column(nullable = false)
     var localDateTime: LocalDateTime,
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "abominal")
-    val relations: MutableList<Relation> = mutableListOf()
+    ) {
 
-) {
+    @PreUpdate
+    fun update() {
+        this.localDateTime = LocalDateTime.now()
+    }
 
     constructor(
         name: String
     ) : this(
         null,
         name,
-        LocalDateTime.now(),
-        mutableListOf()
+        LocalDateTime.now()
     )
 
-    fun addRelations(relation: Relation) {
-        this.relations.add(relation)
-    }
-
     override fun toString(): String {
-        return "Abominal(id=$id, name=$name, localDateTime=$localDateTime)"
+        return "Simple(" +
+                "id=$id, " +
+                "description=$description, " +
+                "localDateTime=$localDateTime" +
+                ")"
     }
 
 }

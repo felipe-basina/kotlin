@@ -7,29 +7,43 @@ data class Relation(
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long = -1,
+    var id: Long? = -1,
 
     @Column(nullable = false)
-    var name: String? = null,
+    var name: String?,
 
     @Column(nullable = false)
-    var identifier: Int? = -1,
+    var identifier: Int?,
 
     @Column(nullable = false)
-    var description: String? = null,
+    var description: String?,
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "relation", cascade = [CascadeType.ALL])
-    val childs: MutableList<Child> = mutableListOf(),
+    val childs: MutableList<Child>,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fake_id")
-    var fake: Fake? = null,
+    var fake: Fake?,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "abominal_id")
-    var abominal: Abominal? = null
+    var abominal: Abominal?
 
 ) {
+
+    constructor(
+        name: String,
+        identifier: Int,
+        description: String,
+    ) : this(
+        null,
+        name,
+        identifier,
+        description,
+        mutableListOf(),
+        null,
+        null
+    )
 
     fun addChild(child: Child) {
         this.childs.add(child)
