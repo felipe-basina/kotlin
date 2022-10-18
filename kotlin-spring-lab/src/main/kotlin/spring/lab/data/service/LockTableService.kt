@@ -68,6 +68,13 @@ class LockTableService(@Autowired private val simpleRepository: SimpleRepository
         return simple
     }
 
+    @Async
+    fun findByIdCustom(dbId: Long): Simple {
+        val simple = this.simpleRepository.customFindById(dbId).get()
+        log.info("m=findAndLock, $simple")
+        return simple
+    }
+
     fun delay(delay: Long) {
         Thread.sleep(delay * 1000)
     }

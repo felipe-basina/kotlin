@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
     val applicationContext = runApplication<LockTableMainApplication>(*args)
     val service = applicationContext.getBean(LockTableService::class.java)
 
-    //saveTest(service)
+//    saveTest(service)
     lockTest(service)
 
 
@@ -32,8 +32,9 @@ private fun lockTest(service: LockTableService) {
     service.lockAndUpdate(dbId, "new 1", 18L)
     service.delay(1L)
     service.findAndLock(dbId)
+//    service.findByIdCustom(dbId)
     service.delay(3L)
-    service.update(dbId, "239430ba-3059-49a5-ab49-93791689370a", "new 2", 0)
+    //service.update(dbId, "6caa7162-8f34-4b89-adaf-68be771a5a4a", "new 2", 0)
 
     service.delay(30L)
 }

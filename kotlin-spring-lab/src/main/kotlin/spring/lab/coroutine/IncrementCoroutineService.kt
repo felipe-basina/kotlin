@@ -10,11 +10,11 @@ class IncrementCoroutineService {
 
     private val log = LoggerFactory.getLogger(IncrementCoroutineService::class.java)
 
-    fun increment(beanFJ: BeanFJ): BeanFJ {
-        //log.info("thread name ${Thread.currentThread().name}")
-        val random = kotlin.random.Random.nextLong(1, 3)
+    suspend fun increment(beanFJ: BeanFJ): BeanFJ {
+//        log.info("thread name ${Thread.currentThread().name}")
+        val random = kotlin.random.Random.nextLong(1, 10)
         beanFJ.incrementBy(random)
-        //delay(1 * 1000)
+        delay(random * 1000)
         return beanFJ
     }
 

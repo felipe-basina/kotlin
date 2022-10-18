@@ -21,6 +21,10 @@ data class BeanFJ(
         log.info("original $original | incremented (* ${this.increment}) ${this.code}")
     }
 
+    fun printContent(): String {
+        return "$original;${this.increment};${this.code}\n"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

@@ -41,4 +41,4 @@ networks:
 
 # sudo docker run -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=dev_db -p 5432:5432 postgres:14.1-alpine
 # docker ps | docker stop <CONTAINER_ID>
-# docker ps | docker exec -it <hash> bash | psql | ALTER ROLE postgres WITH PASSWORD 'your_password';
+# docker ps | docker exec -it <hash> bash | psql -U postgres | ALTER ROLE postgres WITH PASSWORD 'your_password';
