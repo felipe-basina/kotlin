@@ -10,6 +10,7 @@ import java.io.FileWriter
 import java.io.IOException
 import java.lang.StringBuilder
 import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.stream.IntStream
 import java.util.stream.LongStream
 import kotlin.system.exitProcess
@@ -21,12 +22,13 @@ private val log = LoggerFactory.getLogger(CoroutineMain::class.java)
 
 var responseFutures = mutableListOf<BeanFJ>()
 var stringBuilder = StringBuilder()
+var atomicInteger = AtomicInteger(0)
 
 fun main(args: Array<String>) {
     val appContext = runApplication<CoroutineMain>(*args)
     val incrementService = appContext.getBean(IncrementCoroutineService::class.java)
 
-    val allBeans = createBeans(100000)
+    val allBeans = createBeans(10000)
     log.info("allBeans size ${allBeans.size}")
     val chunkedList = breakList(allBeans)
     log.info("chunkedList size ${chunkedList.size}")
@@ -44,11 +46,12 @@ fun main(args: Array<String>) {
         log.info("Elapsed time ${elapsedTimeInMs / 1000}(s)")
         log.info("Total response objects: ${responseFutures.size}")
 
-        //responseFutures.forEach { it.status() }
+        responseFutures.forEach { it.status() }
+        log.info("atomic integer = ${atomicInteger.get()}")
 
 //        saveToFile(responseFutures, deleteExistingFile = true)
-        saveToFile(deleteExistingFile = true)
-        responseFutures = mutableListOf()
+        //saveToFile(deleteExistingFile = true)
+        //responseFutures = mutableListOf()
     }
 
     exitProcess(1)
@@ -91,25 +94,34 @@ private fun breakList(originalList: List<BeanFJ>, total: Int = 10000): List<List
     return originalList.chunked(total)
 }
 
-private fun withWait(allBeans: List<BeanFJ>, incrementService: IncrementCoroutineService) = runBlocking {
+private fun withWait(allBeans: List<BeanFJ>, incrementService: IncrementCoroutineService) {
     val tasks = mutableSetOf<Deferred<BeanFJ>>()
     log.info("init")
-    allBeans.stream()
+    runBlocking {
+        supervisorScope {
+            allBeans.stream()
 //        .parallel()
-        .forEach {
-            tasks.add(
-                async(Dispatchers.Default) {
-                    incrementService.increment(it)
+                .forEach {
+                    tasks.add(
+                        async(Dispatchers.Default) {
+                            incrementService.increment(it)
+                        }
+                    )
                 }
-            )
-        }
-    log.info("end")
+            log.info("end")
 
-    //tasks.awaitAll() // void
-    tasks.forEach {
-        val bean = it.await()
-        responseFutures.add(bean)
-        stringBuilder.append(bean.printContent())
+            //tasks.awaitAll() // void
+            tasks.forEach {
+                try {
+                    val bean = it.await()
+                    responseFutures.add(bean)
+                    stringBuilder.append(bean.printContent())
+                } catch (e: Exception) {
+                    log.error("error = ${e.message}")
+                    atomicInteger.incrementAndGet()
+                }
+            }
+        }
     }
 }
 
