@@ -28,7 +28,7 @@ fun main(args: Array<String>) {
     val appContext = runApplication<CoroutineMain>(*args)
     val incrementService = appContext.getBean(IncrementCoroutineService::class.java)
 
-    val allBeans = createBeans(10000)
+    val allBeans = createBeans(5)
     log.info("allBeans size ${allBeans.size}")
     val chunkedList = breakList(allBeans)
     log.info("chunkedList size ${chunkedList.size}")
@@ -37,7 +37,8 @@ fun main(args: Array<String>) {
 //    chunkedList.forEach {
         val init = System.currentTimeMillis()
 
-        withWait(allBeans, incrementService)
+        //withWait(allBeans, incrementService)
+        withWaitAll(allBeans, incrementService)
 
         val elapsedTimeInMs = System.currentTimeMillis() - init
 
@@ -122,6 +123,32 @@ private fun withWait(allBeans: List<BeanFJ>, incrementService: IncrementCoroutin
                 }
             }
         }
+    }
+}
+
+private fun withWaitAll(allBeans: List<BeanFJ>, incrementService: IncrementCoroutineService) {
+    val tasks = mutableSetOf<Deferred<Unit>>()
+    log.info("init")
+    runBlocking {
+        supervisorScope {
+            allBeans.stream()
+                .forEach {
+                    tasks.add(
+                        async(Dispatchers.Default) {
+                            try {
+                                incrementService.justIncrement(it)
+                            } catch (e: Exception) {
+                                log.error("---> error[1]: ${e.message}")
+                            }
+//                            incrementService.justIncrement(it)
+                        }
+                    )
+                }
+            log.info("end")
+
+            tasks.awaitAll() // void
+            log.info("##### all thread finished! #####")
+        } // supervisorScope
     }
 }
 

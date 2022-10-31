@@ -21,4 +21,15 @@ class IncrementCoroutineService {
         return beanFJ
     }
 
+    suspend fun justIncrement(beanFJ: BeanFJ) {
+//        log.info("thread name ${Thread.currentThread().name}")
+        val random = kotlin.random.Random.nextLong(1, 10)
+        beanFJ.incrementBy(random)
+        delay(random * 1000)
+        if (random % 2 > 0) {
+            throw RuntimeException("An error occurs while processing service.... random = $random")
+        }
+        beanFJ.status()
+    }
+
 }
