@@ -31,6 +31,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.postgresql:postgresql:42.3.5")
+	implementation("com.rabbitmq:amqp-client:5.16.0")
 
 	testImplementation("ch.qos.logback:logback-classic:1.2.10")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
