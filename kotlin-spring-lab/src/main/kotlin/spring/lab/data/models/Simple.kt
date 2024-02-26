@@ -16,6 +16,9 @@ data class Simple(
     @Column(nullable = false)
     var localDateTime: LocalDateTime,
 
+    @Column(nullable = false)
+    var counter: Long,
+
     ) {
 
     @PreUpdate
@@ -23,20 +26,18 @@ data class Simple(
         this.localDateTime = LocalDateTime.now()
     }
 
+    override fun toString(): String {
+        return "Simple(id=$id, description=$description, localDateTime=$localDateTime, counter=$counter)"
+    }
+
     constructor(
-        name: String
+        name: String,
+        counter: Long
     ) : this(
         null,
         name,
-        LocalDateTime.now()
+        LocalDateTime.now(),
+        counter
     )
-
-    override fun toString(): String {
-        return "Simple(" +
-                "id=$id, " +
-                "description=$description, " +
-                "localDateTime=$localDateTime" +
-                ")"
-    }
 
 }

@@ -21,11 +21,11 @@ data class Relation(
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "relation", cascade = [CascadeType.ALL])
     val childs: MutableList<Child>,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fake_id")
     var fake: Fake?,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "abominal_id")
     var abominal: Abominal?
 

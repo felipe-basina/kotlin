@@ -11,8 +11,8 @@ import javax.persistence.LockModeType
 @Repository
 interface SimpleRepository : CrudRepository<Simple, Long> {
 
-//    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+//    @Lock(LockModeType.PESSIMISTIC_READ)
     override fun findById(id: Long): Optional<Simple>
 
     fun findByDescription(description: String): Optional<Simple>

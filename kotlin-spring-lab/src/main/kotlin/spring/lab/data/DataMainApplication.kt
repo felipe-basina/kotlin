@@ -18,21 +18,36 @@ class KotlinSpringLabApplication
 
 fun main(args: Array<String>) {
 	val applicationContext = runApplication<KotlinSpringLabApplication>(*args)
-	try {
-		//createData(applicationContext)
-		val service = applicationContext.getBean(MultipleEntitiesService::class.java)
-		service.getMultipleEntities()
-	} catch (ex: Exception) {
-		ex.printStackTrace()
-	}
+	val service = applicationContext.getBean(MultipleEntitiesService::class.java)
+	service.getFakeById(6)
+
+	/*booleanArrayOf(true).forEach {
+		try {
+			val fake = createData(applicationContext, it)
+			val service = applicationContext.getBean(MultipleEntitiesService::class.java)
+			//service.getMultipleEntities()
+			service.getFakeById(fake.id!!)
+			//service.addIntoFake(fake.id!!, it)
+		} catch (ex: Exception) {
+			ex.printStackTrace()
+		}
+		println("/*******************************************************************/")
+	}*/
+
 	exitProcess(1)
 }
 
-fun createData(applicationContext: ApplicationContext) {
+fun createData(applicationContext: ApplicationContext, delete: Boolean): Fake {
 
 	val fakeRepository = applicationContext.getBean(FakeRepository::class.java)
 	val abominalRepository = applicationContext.getBean(AbominalRepository::class.java)
 	val relationRepository = applicationContext.getBean(RelationRepository::class.java)
+
+	if (delete) {
+		relationRepository.deleteAll()
+		abominalRepository.deleteAll()
+		fakeRepository.deleteAll()
+	}
 
 	// Fake
 	var fake = Fake("fakiee")
@@ -63,4 +78,6 @@ fun createData(applicationContext: ApplicationContext) {
 
 	abominal.addRelations(relation)
 	abominalRepository.save(abominal)
+
+	return fake
 }

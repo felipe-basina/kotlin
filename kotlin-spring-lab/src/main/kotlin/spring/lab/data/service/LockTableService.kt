@@ -16,8 +16,8 @@ class LockTableService(@Autowired private val simpleRepository: SimpleRepository
     private val log: Logger = LoggerFactory.getLogger(LockTableService::class.java)
 
     @Transactional(propagation = Propagation.REQUIRED)
-    fun saving(description: String, rollback: Boolean = false): Simple {
-        val simple = Simple(description)
+    fun saving(description: String, counter: Long = -1L, rollback: Boolean = false): Simple {
+        val simple = Simple(description, counter)
         this.simpleRepository.save(simple)
         if (rollback) {
             throw RuntimeException("Rolling back transaction....")
@@ -31,9 +31,10 @@ class LockTableService(@Autowired private val simpleRepository: SimpleRepository
         log.info("m=lockAndUpdate, ${Thread.currentThread().name}")
         var simple = this.findAndLock(dbId)
         simple.description = newDescription
+        simple.counter += 1
         simple = this.simpleRepository.save(simple)
-        log.info("m=lockAndUpdate, $simple, end")
         this.delay(delay)
+        log.info("m=lockAndUpdate, $simple, end")
     }
 
     @Async
@@ -41,8 +42,10 @@ class LockTableService(@Autowired private val simpleRepository: SimpleRepository
     fun update(dbId: Long, oldDescription: String, newDescription: String, delay: Long) {
         log.info("m=update, ${Thread.currentThread().name}")
         //var simple = this.findByDescription(oldDescription)
-        var simple = this.simpleRepository.customFindById(dbId).get()
+//        var simple = this.simpleRepository.customFindById(dbId).get()
+        var simple = this.simpleRepository.findById(dbId).get()
         simple.description = newDescription
+        simple.counter += 1
         this.delay(delay)
         simple = this.simpleRepository.save(simple)
         log.info("m=update, $simple, end")
@@ -63,6 +66,7 @@ class LockTableService(@Autowired private val simpleRepository: SimpleRepository
     @Async
     @Transactional(propagation = Propagation.REQUIRED)
     fun findAndLock(dbId: Long): Simple {
+        log.info("m=findAndLock, ${Thread.currentThread().name}")
         val simple = this.simpleRepository.findById(dbId).get()
         log.info("m=findAndLock, $simple")
         return simple

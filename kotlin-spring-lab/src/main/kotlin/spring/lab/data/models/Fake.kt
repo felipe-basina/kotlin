@@ -3,6 +3,20 @@ package spring.lab.data.models
 import javax.persistence.*
 
 @Entity
+@NamedEntityGraph(
+    name = "Fake.relations",
+    attributeNodes = [
+        NamedAttributeNode(value = "relations", subgraph = "relations")
+    ],
+    subgraphs = [
+        NamedSubgraph(
+            name = "relations",
+            attributeNodes = [
+                NamedAttributeNode(value = "abominal")
+            ]
+        )
+    ]
+)
 data class Fake(
 
     @Id

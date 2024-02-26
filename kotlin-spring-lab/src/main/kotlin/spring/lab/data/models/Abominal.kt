@@ -4,6 +4,20 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
+@NamedEntityGraph(
+    name = "Abominal.relations",
+    attributeNodes = [
+        NamedAttributeNode(value = "relations", subgraph = "relations")
+    ],
+    subgraphs = [
+        NamedSubgraph(
+            name = "relations",
+            attributeNodes = [
+                NamedAttributeNode(value = "fake")
+            ]
+        )
+    ]
+)
 data class Abominal(
 
     @Id
@@ -17,7 +31,7 @@ data class Abominal(
     var localDateTime: LocalDateTime,
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "abominal")
-    val relations: MutableList<Relation> = mutableListOf()
+    var relations: MutableList<Relation>
 
 ) {
 

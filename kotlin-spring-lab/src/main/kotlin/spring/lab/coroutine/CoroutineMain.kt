@@ -28,17 +28,17 @@ fun main(args: Array<String>) {
     val appContext = runApplication<CoroutineMain>(*args)
     val incrementService = appContext.getBean(IncrementCoroutineService::class.java)
 
-    val allBeans = createBeans(5)
+    val allBeans = createBeans(1000)
     log.info("allBeans size ${allBeans.size}")
     val chunkedList = breakList(allBeans)
     log.info("chunkedList size ${chunkedList.size}")
 
-    IntStream.rangeClosed(1, 1).forEach {
+    IntStream.rangeClosed(1, 5).forEach {
 //    chunkedList.forEach {
         val init = System.currentTimeMillis()
 
-        //withWait(allBeans, incrementService)
-        withWaitAll(allBeans, incrementService)
+        withWait(allBeans, incrementService)
+        //withWaitAll(allBeans, incrementService)
 
         val elapsedTimeInMs = System.currentTimeMillis() - init
 
@@ -47,15 +47,15 @@ fun main(args: Array<String>) {
         log.info("Elapsed time ${elapsedTimeInMs / 1000}(s)")
         log.info("Total response objects: ${responseFutures.size}")
 
-        responseFutures.forEach { it.status() }
+        //responseFutures.forEach { it.status() }
         log.info("atomic integer = ${atomicInteger.get()}")
 
 //        saveToFile(responseFutures, deleteExistingFile = true)
         //saveToFile(deleteExistingFile = true)
-        //responseFutures = mutableListOf()
+        responseFutures = mutableListOf()
     }
 
-    exitProcess(1)
+    exitProcess(0)
 }
 
 private fun saveToFile(content: List<BeanFJ>, deleteExistingFile: Boolean = false) {

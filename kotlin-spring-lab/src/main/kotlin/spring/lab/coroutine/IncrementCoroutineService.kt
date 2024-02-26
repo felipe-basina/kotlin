@@ -15,9 +15,9 @@ class IncrementCoroutineService {
         val random = kotlin.random.Random.nextLong(1, 10)
         beanFJ.incrementBy(random)
         delay(random * 1000)
-        if (random % 2 > 0) {
-            throw RuntimeException("An error occurs while processing service.... random = $random")
-        }
+//        if (random % 2 > 0) {
+//            throw RuntimeException("An error occurs while processing service.... random = $random")
+//        }
         return beanFJ
     }
 
@@ -26,9 +26,9 @@ class IncrementCoroutineService {
         val random = kotlin.random.Random.nextLong(1, 10)
         beanFJ.incrementBy(random)
         delay(random * 1000)
-        if (random % 2 > 0) {
-            throw RuntimeException("An error occurs while processing service.... random = $random")
-        }
+//        if (random % 2 > 0) {
+//            throw RuntimeException("An error occurs while processing service.... random = $random")
+//        }
         beanFJ.status()
     }
 
